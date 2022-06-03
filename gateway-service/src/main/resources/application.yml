@@ -1,0 +1,33 @@
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url: 
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+          
+server:
+  port: 8090
+
+spring:
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    gateway:
+      routes:
+      - id: auditor-service
+        uri: lb://AUDITOR-SERVICE
+        predicates:
+        - Path=/auditor/**
+      - id: developer-service
+        uri: lb://DEVELOPER-SERVICE
+        predicates:
+        - Path=/dev/**
+      - id: tester-service
+        uri: lb://TESTER-SERVICE
+        predicates:
+        - Path=/tester/**
+
+  
